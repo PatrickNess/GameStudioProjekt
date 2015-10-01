@@ -1,36 +1,34 @@
-package userInerface.copy;
+package guessNumber.consoleUI;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import guessNumber.core.GuessTheNumber;
 
-public class GameStudioUI {
-	
+public class GuessNumberUI {
+	private GuessTheNumber gn = new GuessTheNumber();
+
 	private BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-	
-	private enum Option {
-		MINESWEEPER, STONES, GUESSNUMBER,REGISTRATION, SIGNIN, EXIT
 
+	private enum Option {
+		EASY, ADVANCED, EXPERT, EXIT
 	};
-	
+
 	public void run() {
 		while (true) {
 			switch (showMenu()) {
-			case MINESWEEPER:
-				//printRegister();
+			case EASY:
+				gn.setStatus(false);
+				InsertInput(0, 10);
 				break;
-			case STONES:
-				//addToRegister();
+			case ADVANCED:
+				gn.setStatus(false);
+				InsertInput(0, 100);
 				break;
-			case GUESSNUMBER:
-			//	ulozZoznamKnih();
-				break;
-			case REGISTRATION:
-				//odstranit
-				break;
-			case SIGNIN:
-		//
+			case EXPERT:
+				gn.setStatus(false);
+				InsertInput(-500, 500);
 				break;
 			case EXIT:
 				return;
@@ -38,8 +36,14 @@ public class GameStudioUI {
 		}
 	}
 
+	private void InsertInput(int min, int max) {
+		gn.genereateGuessNumber(min, max);
+		while (gn.getStatus()==false) {
+			System.out.println("Insert your tip: ");
+			System.out.println(gn.verifyInput(Integer.parseInt(readLine())));
+		}
+	}
 
-	
 	private Option showMenu() {
 		System.out.println("Menu.");
 		for (Option option : Option.values()) {
@@ -55,7 +59,7 @@ public class GameStudioUI {
 
 		return Option.values()[selection - 1];
 	}
-	
+
 	private String readLine() {
 		// In JDK 6.0 and above Console class can be used
 		// return System.console().readLine();
@@ -66,4 +70,5 @@ public class GameStudioUI {
 			return null;
 		}
 	}
+
 }

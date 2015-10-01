@@ -5,29 +5,33 @@ import java.util.Random;
 public class GuessTheNumber {
 
 	private int guessedNumber;
-	private boolean status=false;
-	
+	private boolean status = false;
+	private int countOfSteps = 0;
 
 	Random randomNumber = new Random();
 
 	public GuessTheNumber() {
-		
+
 	}
-	
-	public void genereateGuessNumber(int minimum, int maximum){
+
+	public void genereateGuessNumber(int minimum, int maximum) {
 		this.guessedNumber = randomNumber.nextInt(maximum - minimum + 1);
 	}
 
 	public String verifyInput(int input) {
-		if (input < guessedNumber) 
+		if (input < guessedNumber){ 
+			countOfSteps++;
 			return " Guessed number is greater than " + input;
-		
-		if (input > guessedNumber)
+		}
+		if (input > guessedNumber){
+			countOfSteps++;
 			return "Guessed number is less than " + input;
-		
-		if (input==guessedNumber)
-			return "Congratulations you solved the game !";
-
+		}
+		if (input==guessedNumber){
+			countOfSteps++;
+			status=true;
+			return "Congratulations you solved the game in "+ countOfSteps + " steps !";
+		}
 		return null;
 	}
 
@@ -46,7 +50,5 @@ public class GuessTheNumber {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-	
-	
 
 }
